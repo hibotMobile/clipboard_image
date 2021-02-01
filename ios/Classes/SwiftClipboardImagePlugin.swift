@@ -25,6 +25,7 @@ public class SwiftClipboardImagePlugin: NSObject, FlutterPlugin {
             let url = URL.init(fileURLWithPath: path)
             let data = try Data(contentsOf: url)
             let image = UIImage(data: data)
+            UIPasteboard.general.items = []
             UIPasteboard.general.image = image
             result("Image copied")
         } catch {
