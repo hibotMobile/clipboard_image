@@ -12,6 +12,8 @@ public class SwiftClipboardImagePlugin: NSObject, FlutterPlugin {
     switch call.method {
     case "copyImage":
         copyImage(call, result: result)
+    case "getImage":
+        getImage(call, result: result)
     default:
         result(FlutterMethodNotImplemented)
     }
@@ -32,5 +34,11 @@ public class SwiftClipboardImagePlugin: NSObject, FlutterPlugin {
             result("Unable to lo  ad data: \(error)")
         }
     }
+  }
+
+  public func getImage(_ call: FlutterMethodCall, result: @escaping FlutterResult) {
+    let image = UIPasteboard.general.image
+    let data = image?.pngData()
+    result(data)
   }
 }

@@ -13,4 +13,11 @@ class ClipboardImage {
     }
     throw UnsupportedError("This method only suppor iOS");
   }
+
+  static Future getImage() async {
+    if (Platform.isIOS) {
+      return _channel.invokeMethod('getImage');
+    }
+    throw UnsupportedError("This method only suppor iOS");
+  }
 }

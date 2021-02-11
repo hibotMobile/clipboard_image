@@ -15,16 +15,7 @@ class MyApp extends StatefulWidget {
 class _MyAppState extends State<MyApp> {
   final imageUrl =
       'https://assets.hibot.us/images/dev-content-based/99737e91f8870bb9687e18e6d44fde9f52d2230a8559b93a02b03a0c2a3e3800@jpg';
-
-  final controller = TextEditingController();
-
-  @override
-  void initState() {
-    super.initState();
-    controller.addListener(() {
-      print('Oelo');
-    });
-  }
+  var image;
 
   @override
   Widget build(BuildContext context) {
@@ -33,25 +24,23 @@ class _MyAppState extends State<MyApp> {
         appBar: AppBar(
           title: const Text('Plugin example app'),
         ),
-        body: Center(
-          child: Column(
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              InkWell(
-                onLongPress: () {
-                  _copyImage(imageUrl);
-                },
-                child: CachedNetworkImage(imageUrl: imageUrl),
-              ),
-              TextField(
-                controller: controller,
-                decoration: InputDecoration(labelText: 'Paste image'),
-                onChanged: (value) {
-                  print(value);
-                },
-              ),
-            ],
-          ),
+        body: ListView(
+          children: [
+            image == null ? SizedBox() : Image.memory(image),
+            Divider(),
+            InkWell(
+              onLongPress: () {
+                _copyImage(imageUrl);
+              },
+              child: CachedNetworkImage(imageUrl: imageUrl),
+            ),
+            RaisedButton(
+              child: Text('Paste image'),
+              onPressed: () {
+                _pasteImage();
+              },
+            )
+          ],
         ),
       ),
     );
@@ -63,6 +52,16 @@ class _MyAppState extends State<MyApp> {
       if (path != null) {
         ClipboardImage.copyImage(path).then((value) {
           print(value);
+        });
+      }
+    });
+  }
+
+  void _pasteImage() {
+    ClipboardImage.getImage().then((value) {
+      if (value != null) {
+        setState(() {
+          image = value;
         });
       }
     });
