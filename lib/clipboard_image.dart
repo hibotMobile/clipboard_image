@@ -33,4 +33,8 @@ class ClipboardImage {
     }
     throw UnsupportedError("This method only suppor iOS");
   }
+
+  static Future clearClipboardImage() async {
+    Clipboard.setData(ClipboardData(text: ""));
+  }
 }
