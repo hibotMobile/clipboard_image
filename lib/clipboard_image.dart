@@ -11,12 +11,25 @@ class ClipboardImage {
       final result = await _channel.invokeMethod('copyImage', path);
       return result;
     }
+
+    if (Platform.isAndroid) {
+      final data = ClipboardData(text: path);
+      final result = await Clipboard.setData(data).then((value) => path);
+      return result;
+    }
     throw UnsupportedError("This method only suppor iOS");
   }
 
   static Future getImage() async {
     if (Platform.isIOS) {
       return _channel.invokeMethod('getImage');
+    }
+    if (Platform.isAndroid) {
+      final clipboardData = await Clipboard.getData(Clipboard.kTextPlain);
+      if (clipboardData != null) {
+        return clipboardData.text;
+      }
+      return null;
     }
     throw UnsupportedError("This method only suppor iOS");
   }

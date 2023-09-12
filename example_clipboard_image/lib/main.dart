@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:clipboard_image/clipboard_image.dart';
 import 'package:flutter/material.dart';
@@ -26,7 +28,11 @@ class _MyAppState extends State<MyApp> {
         ),
         body: ListView(
           children: [
-            image == null ? SizedBox() : Image.memory(image),
+            image == null
+                ? SizedBox()
+                : (Platform.isAndroid)
+                    ? Image.file(File(image))
+                    : Image.memory(image),
             Divider(),
             InkWell(
               onLongPress: () {
