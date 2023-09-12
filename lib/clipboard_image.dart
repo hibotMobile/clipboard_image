@@ -13,7 +13,7 @@ class ClipboardImage {
     }
 
     if (Platform.isAndroid) {
-      final data = ClipboardData(text: path);
+      final data = ClipboardData(text: 'IMAGE:/$path');
       final result = await Clipboard.setData(data).then((value) => path);
       return result;
     }
