@@ -13,7 +13,7 @@ class ClipboardImage {
     }
 
     if (Platform.isAndroid) {
-      final data = ClipboardData(text: 'IMAGE:/$path');
+      final data = ClipboardData(text: 'IMAGE:$path');
       final result = await Clipboard.setData(data).then((value) => path);
       return result;
     }
@@ -27,7 +27,13 @@ class ClipboardImage {
     if (Platform.isAndroid) {
       final clipboardData = await Clipboard.getData(Clipboard.kTextPlain);
       if (clipboardData != null) {
-        return clipboardData.text;
+        final text = clipboardData.text;
+
+        if (text!.startsWith('IMAGE:')) {
+          // Es una imagen, puedes extraer la ruta
+          final imagePath = text.substring(6); // Elimina 'IMAGE:' del principio
+          return imagePath;
+        }
       }
       return null;
     }
