@@ -13,11 +13,11 @@ class ClipboardImage {
     }
 
     if (Platform.isAndroid) {
-      /* final data = ClipboardData(text: 'IMAGE:$path');
+      final data = ClipboardData(text: 'IMAGE:$path');
       final result = await Clipboard.setData(data).then((value) => path);
-      return result;*/
-      final result = await _channel.invokeMethod('copyImage', path);
       return result;
+   /*   final result = await _channel.invokeMethod('copyImage', path);
+      return result;*/
     }
     throw UnsupportedError("This method only suppor iOS");
   }
@@ -27,20 +27,20 @@ class ClipboardImage {
       return _channel.invokeMethod('getImage');
     }
     if (Platform.isAndroid) {
-      /* final clipboardData = await Clipboard.getData(Clipboard.kTextPlain);
+      final clipboardData = await Clipboard.getData(Clipboard.kTextPlain);
       if (clipboardData != null) {
         final text = clipboardData.text;
 
-        if (text!.startsWith('IMAGE:')) {
+        //if (text!.startsWith('IMAGE:')) {
           // Es una imagen, puedes extraer la ruta
-          final imagePath = text.substring(6); // Elimina 'IMAGE:' del principio
+         // final imagePath = text.substring(6); // Elimina 'IMAGE:' del principio
           return imagePath;
-        }
+        //}
       }
-      return null;*/
-      final result = await _channel.invokeMethod('getImage');
+      return null;
+      /*final result = await _channel.invokeMethod('getImage');
       print("imagen pegada ${result.toString()}");
-      return result;
+      return result;*/
 
 
     }
