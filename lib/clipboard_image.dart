@@ -38,7 +38,9 @@ class ClipboardImage {
         }
       }
       return null;*/
-      return _channel.invokeMethod('getImage');
+      var result = _channel.invokeMethod('getImage');
+      print("imagen pegada ${result.toString()}");
+      return result;
     }
     throw UnsupportedError("This method only suppor iOS");
   }
