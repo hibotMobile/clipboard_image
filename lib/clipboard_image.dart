@@ -34,8 +34,9 @@ class ClipboardImage {
         //if (text!.startsWith('IMAGE:')) {
           // Es una imagen, puedes extraer la ruta
          // final imagePath = text.substring(6); // Elimina 'IMAGE:' del principio
-          return imagePath;
+          //return imagePath;
         //}
+        return text;
       }
       return null;
       /*final result = await _channel.invokeMethod('getImage');
