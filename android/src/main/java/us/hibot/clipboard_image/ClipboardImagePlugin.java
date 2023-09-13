@@ -68,6 +68,7 @@ public class ClipboardImagePlugin implements FlutterPlugin, MethodCallHandler {
       if (text.startsWith("IMAGE:")) {
         return text.substring(6);
       }
+      return text;
     }
     return null;
   }
