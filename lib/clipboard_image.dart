@@ -22,7 +22,7 @@ class ClipboardImage {
     throw UnsupportedError("This method only suppor iOS");
   }
 
-  static Future getImage() async {
+  static Future<String?> getImage() async {
     if (Platform.isIOS) {
       return _channel.invokeMethod('getImage');
     }
@@ -38,9 +38,11 @@ class ClipboardImage {
         }
       }
       return null;*/
-      var result = _channel.invokeMethod('getImage');
+      final result = await _channel.invokeMethod('getImage');
       print("imagen pegada ${result.toString()}");
       return result;
+
+
     }
     throw UnsupportedError("This method only suppor iOS");
   }

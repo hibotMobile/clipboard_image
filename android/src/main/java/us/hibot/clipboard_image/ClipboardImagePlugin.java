@@ -53,7 +53,7 @@ public class ClipboardImagePlugin implements FlutterPlugin, MethodCallHandler {
 
   private String copyImageToClipboard(String imagePath) {
     ClipboardManager clipboardManager = (ClipboardManager) applicationContext.getSystemService(Context.CLIPBOARD_SERVICE);
-    ClipData clipData = ClipData.newPlainText("IMAGE", "IMAGE:" + imagePath);
+    ClipData clipData = ClipData.newPlainText("IMAGE", imagePath);
     clipboardManager.setPrimaryClip(clipData);
     return imagePath;
   }
