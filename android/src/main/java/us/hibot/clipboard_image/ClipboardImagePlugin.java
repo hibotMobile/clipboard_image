@@ -65,9 +65,6 @@ public class ClipboardImagePlugin implements FlutterPlugin, MethodCallHandler {
 
     if (clipData != null && clipData.getItemCount() > 0) {
       String text = clipData.getItemAt(0).getText().toString();
-      if (text.startsWith("IMAGE:")) {
-        return text.substring(6);
-      }
       return text;
     }
     return null;
