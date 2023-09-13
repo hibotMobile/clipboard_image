@@ -36,6 +36,7 @@ class ClipboardImage {
          // final imagePath = text.substring(6); // Elimina 'IMAGE:' del principio
           //return imagePath;
         //}
+        print("imagen pegada ${text.toString()}");
         return text;
       }
       return null;
