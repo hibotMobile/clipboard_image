@@ -1,5 +1,6 @@
 import 'dart:async';
-import 'dart:io' show Platform;
+import 'dart:io' show File, Platform;
+
 
 import 'package:flutter/services.dart';
 
@@ -13,11 +14,11 @@ class ClipboardImage {
     }
 
     if (Platform.isAndroid) {
-      final data = ClipboardData(text: 'IMAGE:$path');
+    /*  final data = ClipboardData(text: 'IMAGE:$path');
       final result = await Clipboard.setData(data).then((value) => path);
-      return result;
-   /*   final result = await _channel.invokeMethod('copyImage', path);
       return result;*/
+      final result = await _channel.invokeMethod('copyImage', path);
+      return result;
     }
     throw UnsupportedError("This method only suppor iOS");
   }
@@ -27,29 +28,26 @@ class ClipboardImage {
       return _channel.invokeMethod('getImage');
     }
     if (Platform.isAndroid) {
-      final clipboardData = await Clipboard.getData(Clipboard.kTextPlain);
-      if (clipboardData != null) {
-        final text = clipboardData.text;
+      final clipboardData = await _channel.invokeMethod('getImage');
+        if (clipboardData != null) {
 
-        //if (text!.startsWith('IMAGE:')) {
-          // Es una imagen, puedes extraer la ruta
-         // final imagePath = text.substring(6); // Elimina 'IMAGE:' del principio
-          //return imagePath;
-        //}
-        print("imagen pegada ${text.toString()}");
-        return text;
-      }
+          if (clipboardData != null) {
+            // Verificar si la cadena es una ruta de archivo válida en Android
+            final file = File(clipboardData);
+            if (await file.exists()) {
+              return clipboardData;
+            }
+          }
+        }
       return null;
-      /*final result = await _channel.invokeMethod('getImage');
-      print("imagen pegada ${result.toString()}");
-      return result;*/
-
-
     }
     throw UnsupportedError("This method only suppor iOS");
   }
 
   static Future clearClipboardImage() async {
-    Clipboard.setData(ClipboardData(text: ""));
+    //Clipboard.setData(ClipboardData(text: ""));
+    final result = await _channel.invokeMethod('clearClipboardImage');
+    print("imagen pegada ${result.toString()}");
+    return result;
   }
 }
